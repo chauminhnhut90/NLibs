@@ -152,6 +152,17 @@ public class ThreadManager {
 		});
 	}
 
+	public <T extends Object> void callbackOnUIThread(
+			final DBResultCallback resultCallback, final T result,
+			final boolean continueWaiting) {
+		mUICallbackHandler.post(new Runnable() {
+			@Override
+			public void run() {
+				resultCallback.onResult(continueWaiting);
+			}
+		});
+	}
+
 	/**
 	 * Gửi yêu cầu thực thi một công việc nào đó
 	 */
@@ -188,4 +199,5 @@ public class ThreadManager {
 		mTaskThreadPool.remove(runnable);
 		mUrgentTaskThreadPool.remove(runnable);
 	}
+
 }
