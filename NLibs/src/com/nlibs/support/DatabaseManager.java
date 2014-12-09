@@ -63,7 +63,7 @@ public class DatabaseManager {
 	}
 
 	/**
-	 * Thực hiện query task trên UI Thread
+	 * Thực hiện query task trên Thread cùng với Thread đang gọi
 	 * 
 	 * @param executor
 	 */

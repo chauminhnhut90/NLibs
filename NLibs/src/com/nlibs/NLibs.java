@@ -12,8 +12,10 @@ import com.nlibs.controller.NLibsCache;
 import com.nlibs.controller.NLibsCache.TYPE;
 import com.nlibs.controller.NLibsRequest;
 import com.nlibs.imageloader.PhotoView;
+import com.nlibs.support.DBResultCallback;
 import com.nlibs.support.DataRequestCallback;
 import com.nlibs.support.DatabaseManager;
+import com.nlibs.support.QueryExecutor;
 
 /**
  * <h3>
@@ -39,7 +41,7 @@ public class NLibs {
 	}
 
 	/**
-	 * Hàm khởi tạo DB
+	 * Hàm khởi tạo DB nếu cần thiết
 	 * 
 	 * @param helper
 	 */
@@ -100,6 +102,14 @@ public class NLibs {
 		NLibsRequest.getDataAsListObject(context, httpUrlString, priority,
 				callback);
 	}
+	
+	/****************************************************************************/
+	/****************************************************************************/
+	/****************************************************************************/
+	/****************************PHẦN XỬ LÝ CHO CACHE****************************/
+	/****************************************************************************/
+	/****************************************************************************/
+	/****************************************************************************/
 
 	/**
 	 * Add 1 bitmap từ bộ nhớ cache (memory or disk cache)
@@ -123,5 +133,43 @@ public class NLibs {
 	 */
 	public Bitmap getBitmapFromCache(String url, TYPE type) {
 		return NLibsCache.getInstance(mContext).getBitmapFromCache(url, type);
+	}
+	/****************************************************************************/
+	/****************************************************************************/
+	/****************************************************************************/
+	/****************************PHẦN XỬ LÝ CHO DATABASE*************************/
+	/****************************************************************************/
+	/****************************************************************************/
+	/****************************************************************************/
+	/**
+	 * Thực hiện truy vấn trên cùng thread đang gọi
+	 * 
+	 * @param executor
+	 */
+	public void executeQuery(QueryExecutor executor) {
+		DatabaseManager.getInstance().executeQuery(executor);
+	}
+
+	/**
+	 * Thực hiện truy vấn ở thread khác và không nhận giá trị trả về
+	 * 
+	 * @param executor
+	 * @param forceUpdate
+	 */
+	public void executeQueryTask(final QueryExecutor executor,
+			boolean forceUpdate) {
+		DatabaseManager.getInstance().executeQueryTask(executor, forceUpdate);
+	}
+
+	/**
+	 * Thực hiện truy vấn ở thread khác và có callback trả kết quả về
+	 * 
+	 * @param executor
+	 * @param forceUpdate
+	 */
+	public void executeQueryTask(final QueryExecutor executor,
+			boolean forceUpdate, final DBResultCallback callback) {
+		DatabaseManager.getInstance().executeQueryTask(executor, forceUpdate,
+				callback);
 	}
 }
