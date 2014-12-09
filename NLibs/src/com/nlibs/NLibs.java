@@ -12,6 +12,8 @@ import com.nlibs.controller.NLibsCache.TYPE;
 import com.nlibs.controller.NLibsRequest;
 import com.nlibs.imageloader.PhotoView;
 import com.nlibs.support.DataRequestCallback;
+import com.nlibs.support.DatabaseHelper;
+import com.nlibs.support.DatabaseManager;
 
 /**
  * <h3>
@@ -46,6 +48,7 @@ public class NLibs {
 	public NLibs(Context context) {
 		mContext = context.getApplicationContext();
 		NLibsCache.getInstance(mContext).init();
+		DatabaseManager.initializeInstance(new DatabaseHelper(mContext));
 	}
 
 	/**

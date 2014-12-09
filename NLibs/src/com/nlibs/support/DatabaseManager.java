@@ -25,6 +25,11 @@ public class DatabaseManager {
 		mDatabaseHelper = helper;
 	}
 
+	/**
+	 * Khởi tạo database
+	 * 
+	 * @param helper
+	 */
 	public static synchronized void initializeInstance(SQLiteOpenHelper helper) {
 		if (instance == null) {
 			instance = new DatabaseManager(helper);

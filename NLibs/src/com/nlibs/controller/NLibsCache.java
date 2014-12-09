@@ -31,8 +31,11 @@ public class NLibsCache {
 	public NLibsCache(Context context) {
 		mContext = context;
 	}
-	
-	public void init(){
+
+	/**
+	 * Khởi tạo các vùng nhớ
+	 */
+	public void init() {
 		MemoryCacheUtils.getInstance();
 		DiskLruCacheUtils.getInstance(mContext);
 	}
