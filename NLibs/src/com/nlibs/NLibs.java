@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 
 import com.nlibs.controller.NLibsCache;
@@ -12,7 +13,6 @@ import com.nlibs.controller.NLibsCache.TYPE;
 import com.nlibs.controller.NLibsRequest;
 import com.nlibs.imageloader.PhotoView;
 import com.nlibs.support.DataRequestCallback;
-import com.nlibs.support.DatabaseHelper;
 import com.nlibs.support.DatabaseManager;
 
 /**
@@ -38,6 +38,15 @@ public class NLibs {
 		getInstance(context);
 	}
 
+	/**
+	 * Hàm khởi tạo DB
+	 * 
+	 * @param helper
+	 */
+	public static void initDatabase(SQLiteOpenHelper helper) {
+		DatabaseManager.initializeInstance(helper);
+	}
+
 	public static NLibs getInstance(Context context) {
 		if (null == mInstance) {
 			mInstance = new NLibs(context);
@@ -48,7 +57,6 @@ public class NLibs {
 	public NLibs(Context context) {
 		mContext = context.getApplicationContext();
 		NLibsCache.getInstance(mContext).init();
-		DatabaseManager.initializeInstance(new DatabaseHelper(mContext));
 	}
 
 	/**
